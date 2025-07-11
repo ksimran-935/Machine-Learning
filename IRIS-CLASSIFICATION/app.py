@@ -1,9 +1,11 @@
 import streamlit as st
 import numpy as np
 import joblib
+import os
 
-# Load the trained model
-model = joblib.load('iris_knn_model.pkl')
+# Get the full path of the model regardless of current directory
+model_path = os.path.join(os.path.dirname(__file__), 'iris_knn_model.pkl')
+model = joblib.load(model_path)
 
 st.title("🌸 Iris Flower Classifier")
 st.write("Enter flower measurements below to predict the species:")
