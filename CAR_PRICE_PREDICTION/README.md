@@ -6,6 +6,14 @@ A Streamlit web application that predicts the **selling price of a used car** ba
 
 
 ---
+## 🧩 Problem Statement
+
+Estimating the resale value of a used car can be a complex process influenced by many factors such as age, distance driven, fuel type, and power. Car sellers often struggle to determine a fair price, and buyers want to ensure they're paying the right amount.
+
+**Goal**:  
+To build a machine learning-powered web application that predicts the **resale price of a car** using its features. This empowers users—sellers, buyers, or dealers—to make informed decisions backed by data.
+
+---
 
 ## 📌 Features
 
@@ -67,4 +75,3 @@ git clone https://github.com/YOUR_USERNAME/car-price-estimator.git
 cd car-price-estimator
 pip install -r requirements.txt
 streamlit run app.py
-
