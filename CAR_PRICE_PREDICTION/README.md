@@ -3,7 +3,7 @@
 A Streamlit web application that predicts the **selling price of a used car** based on its specifications like mileage, engine size, fuel type, transmission, and more.
 
 [![Streamlit App](https://img.shields.io/badge/Live%20Demo-Available-brightgreen?logo=streamlit)](https://machine-learning-hlnzzgwgugh33ovwcenltq.streamlit.app/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
 
 ---
 
