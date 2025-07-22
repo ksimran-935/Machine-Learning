@@ -1,11 +1,21 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
+import urllib.request
 
-# Load model
-model = joblib.load("RandomForest_best_model (2).joblib")
+# ========== Step 1: Download model from Google Drive if not present ==========
+MODEL_URL = "https://drive.google.com/uc?export=download&id=1ziYd-KdiGqeyCl38LK7m19MaiEoemSIX"
+MODEL_PATH = "RandomForest_best_model.joblib"
 
-# List of expected columns (order must match model training)
+if not os.path.exists(MODEL_PATH):
+    with st.spinner("📥 Downloading model..."):
+        urllib.request.urlretrieve(MODEL_URL, MODEL_PATH)
+
+# ========== Step 2: Load model ==========
+model = joblib.load(MODEL_PATH)
+
+# ========== Step 3: Expected features ==========
 expected_columns = [
     'vehicle_age', 'km_driven', 'mileage', 'engine', 'max_power', 'seats',
     'seller_type_Dealer', 'seller_type_Individual', 'seller_type_Trustmark Dealer',
@@ -13,13 +23,12 @@ expected_columns = [
     'transmission_type_Automatic', 'transmission_type_Manual'
 ]
 
-# App config
+# ========== Step 4: Streamlit UI ==========
 st.set_page_config(page_title="Car Price Estimator", layout="centered")
-
 st.title("🚗 Car Price Estimator")
 st.markdown("Predict the selling price of a used car based on its specifications.")
 
-# Centered Input UI
+# Centered input fields
 with st.container():
     st.markdown("### ✍️ Enter Car Details")
 
@@ -47,24 +56,20 @@ input_data = {
     'max_power': max_power,
     'seats': seats,
 
-    # Seller type
-    'seller_type_Dealer': 1 if seller_type == 'Dealer' else 0,
-    'seller_type_Individual': 1 if seller_type == 'Individual' else 0,
-    'seller_type_Trustmark Dealer': 1 if seller_type == 'Trustmark Dealer' else 0,
+    'seller_type_Dealer': int(seller_type == 'Dealer'),
+    'seller_type_Individual': int(seller_type == 'Individual'),
+    'seller_type_Trustmark Dealer': int(seller_type == 'Trustmark Dealer'),
 
-    # Fuel type
-    'fuel_type_CNG': 1 if fuel_type == 'CNG' else 0,
-    'fuel_type_Diesel': 1 if fuel_type == 'Diesel' else 0,
-    'fuel_type_Electric': 1 if fuel_type == 'Electric' else 0,
-    'fuel_type_LPG': 1 if fuel_type == 'LPG' else 0,
-    'fuel_type_Petrol': 1 if fuel_type == 'Petrol' else 0,
+    'fuel_type_CNG': int(fuel_type == 'CNG'),
+    'fuel_type_Diesel': int(fuel_type == 'Diesel'),
+    'fuel_type_Electric': int(fuel_type == 'Electric'),
+    'fuel_type_LPG': int(fuel_type == 'LPG'),
+    'fuel_type_Petrol': int(fuel_type == 'Petrol'),
 
-    # Transmission
-    'transmission_type_Automatic': 1 if transmission_type == 'Automatic' else 0,
-    'transmission_type_Manual': 1 if transmission_type == 'Manual' else 0
+    'transmission_type_Automatic': int(transmission_type == 'Automatic'),
+    'transmission_type_Manual': int(transmission_type == 'Manual')
 }
 
-# Convert to DataFrame and reindex to match training
 input_df = pd.DataFrame([input_data])
 input_df = input_df.reindex(columns=expected_columns, fill_value=0)
 
