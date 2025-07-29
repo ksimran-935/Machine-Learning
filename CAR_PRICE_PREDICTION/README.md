@@ -1,4 +1,4 @@
-# 🚗 Car Price Estimator
+# 🚗 Car Resale Price Estimator
 
 A Streamlit web application that predicts the **selling price of a used car** based on its specifications like mileage, engine size, fuel type, transmission, and more.
 
